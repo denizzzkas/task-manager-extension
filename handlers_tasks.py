@@ -84,6 +84,7 @@ async def fn_create_task(ctx, params: CreateTaskParams) -> ActionResult:
     return ActionResult.success(
         data={"task_id": doc.id, "title": params.title},
         summary=f"Task created: {params.title}",
+        refresh_panels=["tasks"],
     )
 
 
@@ -124,6 +125,7 @@ async def fn_update_task(ctx, params: UpdateTaskParams) -> ActionResult:
     return ActionResult.success(
         data={"task_id": params.task_id},
         summary=f"Task updated: {doc.data.get('title')}",
+        refresh_panels=["tasks"],
     )
 
 
@@ -138,6 +140,7 @@ async def fn_delete_task(ctx, params: TaskIdParams) -> ActionResult:
     return ActionResult.success(
         data={"task_id": params.task_id},
         summary=f"Task deleted: {doc.data.get('title')}",
+        refresh_panels=["tasks"],
     )
 
 
@@ -152,6 +155,7 @@ async def fn_complete_task(ctx, params: TaskIdParams) -> ActionResult:
     return ActionResult.success(
         data={"task_id": params.task_id},
         summary=f"Completed: {doc.data.get('title')}",
+        refresh_panels=["tasks"],
     )
 
 
