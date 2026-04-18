@@ -39,17 +39,6 @@
       }
     }
   ],
-  "panels": {
-    "tasks": {
-      "slot": "left",
-      "title": "Task Planner",
-      "icon": "CheckSquare",
-      "default_width": 300,
-      "min_width": 240,
-      "max_width": 420,
-      "refresh": "on_event:task.created,task.updated,task.deleted,task.completed"
-    }
-  },
   "signals": [],
   "schedules": [
     {"name": "deadline_check", "cron": "0 * * * *"}
