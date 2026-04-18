@@ -1,0 +1,64 @@
+{
+  "app_id": "task-planner",
+  "version": "1.0.0",
+  "capabilities": [],
+  "tools": [
+    {
+      "name": "task_planner",
+      "description": "Manage tasks with deadlines, priorities and reminders. Create, update, complete, delete, search and export tasks.",
+      "scopes": ["*"],
+      "parameters": {
+        "message": {"type": "string", "required": false},
+        "kwargs": {"type": "string", "required": true}
+      }
+    },
+    {
+      "name": "skeleton_refresh_tasks",
+      "description": "Background refresh: task statistics.",
+      "scopes": [],
+      "parameters": {
+        "kwargs": {"type": "string", "required": true}
+      }
+    },
+    {
+      "name": "skeleton_alert_tasks",
+      "description": "Alert on task changes.",
+      "scopes": [],
+      "parameters": {
+        "old": {"type": "object", "required": false},
+        "new": {"type": "object", "required": false},
+        "kwargs": {"type": "string", "required": true}
+      }
+    },
+    {
+      "name": "__panel__tasks",
+      "description": "Panel: Task Planner",
+      "scopes": [],
+      "parameters": {
+        "params": {"type": "string", "required": true}
+      }
+    }
+  ],
+  "panels": {
+    "tasks": {
+      "slot": "left",
+      "title": "Task Planner",
+      "icon": "CheckSquare",
+      "default_width": 300,
+      "min_width": 240,
+      "max_width": 420,
+      "refresh": "on_event:task.created,task.updated,task.deleted,task.completed"
+    }
+  },
+  "signals": [],
+  "schedules": [
+    {"name": "deadline_check", "cron": "0 * * * *"}
+  ],
+  "required_scopes": ["*"],
+  "name": "Task Planner",
+  "description": "Manage tasks with deadlines, priorities and reminders.",
+  "author": "Imperal",
+  "license": "MIT",
+  "category": "productivity",
+  "tags": ["tasks", "planning", "deadlines", "reminders", "productivity"]
+}
