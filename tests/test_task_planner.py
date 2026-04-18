@@ -384,26 +384,27 @@ class TestDeadlineCheck:
 
 class TestPanel:
     async def test_renders(self):
-        from imperal_sdk import ui
+        from imperal_sdk.ui.base import UINode
         from panels import panel_tasks
         ctx = make_ctx()
         await fn_create_task(ctx, CreateTaskParams(title="Task 1", priority="high"))
         result = await panel_tasks(ctx)
-        assert isinstance(result, ui.Stack)
+        assert isinstance(result, UINode)
+        assert result.type == "Stack"
 
     async def test_empty_renders(self):
-        from imperal_sdk import ui
+        from imperal_sdk.ui.base import UINode
         from panels import panel_tasks
         ctx = make_ctx()
         result = await panel_tasks(ctx)
-        assert isinstance(result, ui.Stack)
+        assert isinstance(result, UINode)
 
     async def test_active_tab(self):
-        from imperal_sdk import ui
+        from imperal_sdk.ui.base import UINode
         from panels import panel_tasks
         ctx = make_ctx()
         cr = await fn_create_task(ctx, CreateTaskParams(title="Done"))
         await fn_complete_task(ctx, TaskIdParams(task_id=cr.data["task_id"]))
         await fn_create_task(ctx, CreateTaskParams(title="Active"))
         result = await panel_tasks(ctx, tab="active")
-        assert isinstance(result, ui.Stack)
+        assert isinstance(result, UINode)
