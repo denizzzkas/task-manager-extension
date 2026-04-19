@@ -4,7 +4,6 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from imperal_sdk import ui
-from imperal_sdk.ui.actions import Call, Send
 
 from app import ext
 
@@ -76,7 +75,7 @@ async def panel_tasks(ctx, tab: str = "all", **kwargs):
 
     toolbar = ui.Stack([
         ui.Button("+ New Task", variant="primary", size="sm", icon="Plus",
-                  on_click=Send("Create a new task")),
+                  on_click=ui.Send("Create a new task")),
     ], direction="h", sticky=True)
 
     return ui.Stack([toolbar, stats, tabs], direction="v", gap=2)
@@ -103,12 +102,12 @@ def _task_list(tasks: list) -> ui.Stack:
             actions.append({
                 "icon": "CheckCircle",
                 "label": "Complete",
-                "on_click": Call("complete_task", task_id=t.get("id", "")),
+                "on_click": ui.Call("complete_task", task_id=t.get("id", "")),
             })
         actions.append({
             "icon": "Trash2",
             "label": "Delete",
-            "on_click": Call("delete_task", task_id=t.get("id", "")),
+            "on_click": ui.Call("delete_task", task_id=t.get("id", "")),
             "confirm": f"Delete '{t.get('title', '')}'?",
         })
 
