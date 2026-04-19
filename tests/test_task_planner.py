@@ -18,19 +18,8 @@ from skeleton import deadline_check, skeleton_alert_tasks, skeleton_refresh_task
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-class _CallableNotify:
-    """Drop-in for ctx.notify that supports direct call (production API)."""
-    def __init__(self):
-        self.sent: list[str] = []
-
-    async def __call__(self, message: str, **kwargs) -> None:
-        self.sent.append(message)
-
-
 def make_ctx(user_id: str = "test_user"):
-    ctx = MockContext(user_id=user_id)
-    ctx.notify = _CallableNotify()
-    return ctx
+    return MockContext(user_id=user_id)
 
 
 # ── create_task ───────────────────────────────────────────────────────────────
@@ -301,7 +290,7 @@ class TestSkeletonAlert:
         ctx = make_ctx()
         await skeleton_alert_tasks(ctx, old={"overdue": 1}, new={"overdue": 3})
         assert len(ctx.notify.sent) == 1
-        assert "2 task(s)" in ctx.notify.sent[0]
+        assert "2 task(s)" in ctx.notify.sent[0]["message"]
 
     async def test_no_alert_same(self):
         ctx = make_ctx()
@@ -329,7 +318,7 @@ class TestDeadlineCheck:
         await ctx.store.update("tasks", cr.data["task_id"], {"reminder_enabled": True})
         await deadline_check(ctx)
         assert len(ctx.notify.sent) == 1
-        assert "Meeting" in ctx.notify.sent[0]
+        assert "Meeting" in ctx.notify.sent[0]["message"]
 
     async def test_no_reminder_if_disabled(self):
         ctx = make_ctx()

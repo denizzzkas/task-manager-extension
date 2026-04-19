@@ -1,8 +1,7 @@
 """Task Planner · Extension setup."""
 from pathlib import Path
 
-from imperal_sdk import Extension, ChatExtension
-from imperal_sdk.types.health import HealthStatus
+from imperal_sdk import Extension, ChatExtension, HealthStatus
 
 SYSTEM_PROMPT = (Path(__file__).parent / "system_prompt.txt").read_text()
 
